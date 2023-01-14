@@ -1,5 +1,6 @@
-import './globals.css'
-
+"use client";
+import "./globals.css";
+import Navbar from "../components/Navbar";
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -8,7 +9,10 @@ export default function RootLayout({ children }) {
         head.jsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body className='bg-gray-200'>{children}</body>
+      <body className="bg-gray-200">
+        <Navbar />
+        {children}
+      </body>
     </html>
-  )
+  );
 }
