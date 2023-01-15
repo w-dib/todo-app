@@ -12,6 +12,7 @@ export default function Navbar({ setLoggedIn, setUser }) {
         setAuthUser(user);
         setLoggedIn(true);
         setUser(user);
+        // console.log(user.photoURL);
       } else {
         setAuthUser(null);
         setLoggedIn(false);
@@ -40,28 +41,38 @@ export default function Navbar({ setLoggedIn, setUser }) {
   };
 
   return (
-    <nav className="bg-blue-500">
-      <div className="flex p-4 justify-center">
+    <nav className="justify-center	bg-blue-500">
+      <div className="flex p-4 max-w-xl mx-auto">
         {user ? (
-          <div className="flex">
-            <div className="flex items-center mr-3 text-white">
+          <div className="flex justify-between w-full">
+            <div className="flex  items-center text-white">
               {user ? "Welcome, " + user.displayName : ""}
+              <img
+                className="ml-2 rounded-full h-10 border-1 border-blue-900"
+                src={user.photoURL}
+                alt={user.displayName}
+              />
             </div>
-            <button
-              className="flex bg-white text-blue-500 font-medium p-2 rounded-lg justify-items-center hover:bg-blue-800 hover:text-white transition-left duration-500 ease-in-out"
-              onClick={handleLogout}
-            >
-              <p className="mr-1">Logout</p>{" "}
-              <FaSignOutAlt className="my-auto" />
-            </button>
+            <div className="flex">
+              <button
+                className="flex bg-white text-blue-500 font-medium p-2 rounded-lg justify-items-center hover:bg-blue-800 hover:text-white transition-left duration-500 ease-in-out ml-4"
+                onClick={handleLogout}
+              >
+                <p className="mr-1">Logout</p>{" "}
+                <FaSignOutAlt className="my-auto" />
+              </button>
+            </div>
           </div>
         ) : (
-          <button
-            className="flex bg-white text-blue-500 font-medium p-2 rounded-lg justify-items-center hover:bg-blue-800 hover:text-white transition-left duration-500 ease-in-out"
-            onClick={handleNavbarLogin}
-          >
-            <p className="mr-1">Login with</p> <FaGoogle className="my-auto" />
-          </button>
+          <div className="mx-auto">
+            <button
+              className="flex bg-white text-blue-500 font-medium p-2 rounded-lg justify-items-center hover:bg-blue-800 hover:text-white transition-left duration-500 ease-in-out"
+              onClick={handleNavbarLogin}
+            >
+              <p className="mr-1">Login with</p>{" "}
+              <FaGoogle className="my-auto" />
+            </button>
+          </div>
         )}
       </div>
     </nav>

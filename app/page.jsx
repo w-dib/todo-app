@@ -8,6 +8,10 @@ export default function Home() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [tasks, setTasks] = useState([]);
+  const handleSubmit = (task) => {
+    setTasks([...tasks, task]);
+  };
 
   return (
     <div>
@@ -16,8 +20,10 @@ export default function Home() {
         <div>Loading...</div>
       ) : loggedIn ? (
         <>
-          <ToDoEntry user={user} />
-          <ToDoCard user={user} />
+          <ToDoEntry handleSubmit={handleSubmit} />
+          {/* {tasks.map((task) => (
+            <ToDoCard key={id} task={task} />
+          ))} */}
         </>
       ) : (
         <div className="flex flex-col items-center justify-top h-screen mt-10">

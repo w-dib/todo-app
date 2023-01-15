@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { FaPen, FaTrash } from "react-icons/fa";
-export default function ToDoCard() {
+export default function ToDoCard({ index, task }) {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
