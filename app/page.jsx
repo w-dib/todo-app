@@ -2,28 +2,43 @@
 import ToDoEntry from "@/components/ToDoEntry";
 import ToDoCard from "@/components/ToDoCard";
 import Navbar from "@/components/Navbar";
+import { db } from "../app/fbconfig";
+import { collection, getDocs } from "firebase/firestore";
+import { useState, useEffect } from "react";
+import { async } from "@firebase/util";
 
-import { useState } from "react";
 export default function Home() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [tasks, setTasks] = useState([]);
-  const handleSubmit = (task) => {
-    setTasks([...tasks, task]);
-  };
+
+  //FIX EVERYTHING BELOW
+  // const fetchTasks = async () => {
+  //   await getDocs(collection(db, "tasks"));
+  //   fetchTasks.forEach((doc) => {
+  //     setTasks([...tasks, task.data()]);
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   async () => {
+  //     const fetchTasks = await getDocs(collection(db, "tasks"));
+  //     const docs = fetchTasks.docs.map((doc) => doc.data());
+  //     console.log(docs);
+  //   };
+  // }, []);
+
+  //FIX EVERYTHING ABOVE
 
   return (
     <div>
       <Navbar setLoggedIn={setLoggedIn} setUser={setUser} />
-      {loading ? (
-        <div>Loading...</div>
-      ) : loggedIn ? (
+      {loggedIn ? (
         <>
-          <ToDoEntry handleSubmit={handleSubmit} />
-          {/* {tasks.map((task) => (
-            <ToDoCard key={id} task={task} />
-          ))} */}
+          <ToDoEntry />
+          {tasks.map((task) => (
+            <ToDoCard key={task.timestamp} task={task} />
+          ))}
         </>
       ) : (
         <div className="flex flex-col items-center justify-top h-screen mt-10">
