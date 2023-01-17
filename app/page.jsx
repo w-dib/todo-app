@@ -14,18 +14,15 @@ export default function Home() {
 
   //FIX EVERYTHING BELOW
   // const fetchTasks = async () => {
-  //   await getDocs(collection(db, "tasks"));
-  //   fetchTasks.forEach((doc) => {
+  //  const var1= (await getDocs(collection(db, "tasks"))).docs;
+  //  console.log("my result", var1)
+  //   fetchTasks.forEach((task) => {
   //     setTasks([...tasks, task.data()]);
   //   });
   // };
 
   // useEffect(() => {
-  //   async () => {
-  //     const fetchTasks = await getDocs(collection(db, "tasks"));
-  //     const docs = fetchTasks.docs.map((doc) => doc.data());
-  //     console.log(docs);
-  //   };
+  //   fetchTasks()
   // }, []);
 
   //FIX EVERYTHING ABOVE
