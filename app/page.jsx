@@ -3,9 +3,8 @@ import ToDoEntry from "@/components/ToDoEntry";
 import ToDoCard from "@/components/ToDoCard";
 import Navbar from "@/components/Navbar";
 import { db } from "../app/fbconfig";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, query, getDocs } from "firebase/firestore";
 import { useState, useEffect } from "react";
-import { async } from "@firebase/util";
 
 export default function Home() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -13,19 +12,22 @@ export default function Home() {
   const [tasks, setTasks] = useState([]);
 
   //FIX EVERYTHING BELOW
-  // const fetchTasks = async () => {
-  //  const var1= (await getDocs(collection(db, "tasks"))).docs;
-  //  console.log("my result", var1)
-  //   fetchTasks.forEach((task) => {
-  //     setTasks([...tasks, task.data()]);
-  //   });
-  // };
+  const fetchTasks = async () => {
 
-  // useEffect(() => {
-  //   fetchTasks()
-  // }, []);
+  const q = query(collection(db,"tasks"))
+  const querySnapshot = await getDocs(q);
+  console.log(querySnapshot);
+  const tempTasks=[]
+  querySnapshot.forEach((task) => {
+    console.log(task.id, " => ", task.data());
+    tempTasks.push({id:task.id,...task.data()})
+  });
+  setTasks(tempTasks);
+  };
 
-  //FIX EVERYTHING ABOVE
+  useEffect(() => {
+    fetchTasks()
+  }, []);
 
   return (
     <div>
@@ -34,7 +36,7 @@ export default function Home() {
         <>
           <ToDoEntry />
           {tasks.map((task) => (
-            <ToDoCard key={task.timestamp} task={task} />
+            <ToDoCard key={task.id} task={task} />
           ))}
         </>
       ) : (

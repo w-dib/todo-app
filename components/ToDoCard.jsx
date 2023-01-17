@@ -17,7 +17,8 @@ export default function ToDoCard({ task }) {
         <h3
           className={`text-lg font-medium ${isChecked ? "line-through" : ""}`}
         >
-          Task Title Here
+          {task.text} 
+          {/* logged at {String(task.timestamp)} */}
         </h3>
       </div>
       <div className="flex items-center justify-end ml-3">

@@ -12,7 +12,6 @@ export default function Navbar({ setLoggedIn, setUser }) {
         setAuthUser(user);
         setLoggedIn(true);
         setUser(user);
-        console.log(user.photoURL);
       } else {
         setAuthUser(null);
         setLoggedIn(false);
