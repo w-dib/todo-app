@@ -3,7 +3,15 @@ import ToDoEntry from "@/components/ToDoEntry";
 import ToDoCard from "@/components/ToDoCard";
 import Navbar from "@/components/Navbar";
 import { db } from "../app/fbconfig";
-import { collection, query, getDocs, orderBy } from "firebase/firestore";
+import {
+  collection,
+  query,
+  getDocs,
+  orderBy,
+  onSnapshot,
+  QuerySnapshot,
+  doc,
+} from "firebase/firestore";
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -11,22 +19,36 @@ export default function Home() {
   const [user, setUser] = useState(null);
   const [tasks, setTasks] = useState([]);
 
-  const fetchTasks = async () => {
-
-  const q = query(collection(db, "tasks"))
-  const querySnapshot = await getDocs(q);
-  console.log(querySnapshot);
-  const tempTasks=[]
-  querySnapshot.forEach((task) => {
-    console.log(task.id, " => ", task.data());
-    tempTasks.push({id:task.id,...task.data()})
-  });
-  setTasks(tempTasks);
-  };
-
   useEffect(() => {
-    fetchTasks()
-  }, [tasks]);
+    const q = query(collection(db, "tasks"), orderBy("timestamp", "desc"));
+    const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
+      setTasks(
+        QuerySnapshot.tasks.map((task) => ({
+          ...task.data(),
+          id: task.id,
+          timestamp: doc.data().timestamp?.toDate().getTime(),
+        }))
+      );
+    });
+
+    return unsubscribe;
+  }, []);
+
+  // const fetchTasks = async () => {
+  //   const q = query(collection(db, "tasks"));
+  //   const querySnapshot = await getDocs(q);
+  //   console.log(querySnapshot);
+  //   const tempTasks = [];
+  //   querySnapshot.forEach((task) => {
+  //     console.log(task.id, " => ", task.data());
+  //     tempTasks.push({ id: task.id, ...task.data() });
+  //   });
+  //   setTasks(tempTasks);
+  // };
+
+  // useEffect(() => {
+  //   fetchTasks()
+  // }, [tasks]);
 
   return (
     <div>
