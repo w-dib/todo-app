@@ -3,7 +3,7 @@ import ToDoEntry from "@/components/ToDoEntry";
 import ToDoCard from "@/components/ToDoCard";
 import Navbar from "@/components/Navbar";
 import { db } from "../app/fbconfig";
-import { collection, query, getDocs } from "firebase/firestore";
+import { collection, query, getDocs, orderBy } from "firebase/firestore";
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -13,7 +13,7 @@ export default function Home() {
 
   const fetchTasks = async () => {
 
-  const q = query(collection(db,"tasks"))
+  const q = query(collection(db, "tasks"))
   const querySnapshot = await getDocs(q);
   console.log(querySnapshot);
   const tempTasks=[]
