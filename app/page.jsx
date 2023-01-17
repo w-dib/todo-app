@@ -11,7 +11,6 @@ export default function Home() {
   const [user, setUser] = useState(null);
   const [tasks, setTasks] = useState([]);
 
-  //FIX EVERYTHING BELOW
   const fetchTasks = async () => {
 
   const q = query(collection(db,"tasks"))
@@ -27,7 +26,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchTasks()
-  }, []);
+  }, [tasks]);
 
   return (
     <div>
