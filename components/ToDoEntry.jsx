@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FaPaperPlane } from "react-icons/fa";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { db } from "../app/fbconfig";
 
 export default function ToDoEntry() {
@@ -12,7 +12,7 @@ export default function ToDoEntry() {
       const docRef = await addDoc(collection(db, "tasks"), {
         text: taskText,
         timestamp: new Date(),
-        isChecked: false
+        isChecked: false,
       });
       console.log("Document written with ID: ", docRef.id);
       setTaskText("");
@@ -24,14 +24,6 @@ export default function ToDoEntry() {
   const handleDismiss = () => {
     setShowAlert(false);
   };
-
-  // useEffect(() => {
-  //   async () => {
-  //     const fetchTasks = await getDocs(collection(db, "tasks"));
-  //     const docs = fetchTasks.docs.map((doc) => doc.data());
-  //     console.log(docs);
-  //   };
-  // }, []);
 
   return (
     <div className="relative flex mt-5 shadow-md rounded-lg p-4 max-w-xl mx-auto bg-white">
