@@ -12,6 +12,7 @@ export default function ToDoEntry() {
       const docRef = await addDoc(collection(db, "tasks"), {
         text: taskText,
         timestamp: new Date(),
+        isChecked: false
       });
       console.log("Document written with ID: ", docRef.id);
       setTaskText("");

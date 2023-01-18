@@ -1,9 +1,12 @@
 "use client";
 import { useState } from "react";
 import { FaPen, FaTrash } from "react-icons/fa";
+import { collection, doc, updateDoc } from "firebase/firestore";
+import { db } from "../app/fbconfig";
 export default function ToDoCard({ task }) {
   const [isChecked, setIsChecked] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [editedText, setEditedText] = useState("")
 
 
   function handleEdit(){
@@ -15,6 +18,16 @@ export default function ToDoCard({ task }) {
     setIsEditing(false)
     console.log("Finished editing")
   }
+
+// HOW TO UPDATE TODO ENTRY WITH EDIT BUTTON
+// async (e) => {
+//  await updateDoc(doc(db, "tasks", doc.id), {
+//     text: {editedText}
+
+//   });}
+
+
+
   return (
     <div className="flex relative mt-5 shadow-md rounded-lg p-4 max-w-xl mx-auto bg-white">
       <p className="top-1 mt-1 left-12 ml-1 absolute text-sm font-light text-slate-400"> {task.timestamp}</p>
@@ -22,7 +35,7 @@ export default function ToDoCard({ task }) {
       <div className="mt-3 flex items-center justify-start">
         <input
           type="checkbox"
-          className="w-6 h-6 items-center "
+          className="w-6 h-6 items-center"
           onChange={() => setIsChecked(!isChecked)}
         />
       </div>
@@ -34,7 +47,9 @@ export default function ToDoCard({ task }) {
   <input
           type="text"
           className="border-2 border-gray-400 rounded-lg p-2 w-full focus:outline-none focus:border-blue-500"
-          placeholder="Enter task here"
+          placeholder="Edit task, then hit ↵"
+          onChange={(e) => setEditedText(e.target.value)}
+          value={editedText}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               stopEditing();
