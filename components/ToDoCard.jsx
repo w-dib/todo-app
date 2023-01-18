@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { FaPen, FaTrash } from "react-icons/fa";
-import { collection, doc, updateDoc } from "firebase/firestore";
+import { collection, doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../app/fbconfig";
 export default function ToDoCard({ task }) {
   const [isChecked, setIsChecked] = useState(false);
@@ -23,6 +23,14 @@ export default function ToDoCard({ task }) {
     console.log("Finished editing");
   }
   ///END EDITING TASKS
+
+  ///DELETING TASKS
+  const handleDelete = async () => {
+    const docRef = doc(db, "tasks", task.id);
+    await deleteDoc(docRef);
+    console.log("Document deleted with ID: ", docRef.id);
+  };
+  ///END DELETING TASKS
 
   return (
     <div className="flex relative mt-5 shadow-md rounded-lg p-4 max-w-xl mx-auto bg-white">
@@ -68,7 +76,10 @@ export default function ToDoCard({ task }) {
           onClick={() => setIsEditing(!isEditing)}
           className="h-6 w-6 text-gray-600 hover:text-gray-800 cursor-pointer"
         />
-        <FaTrash className="h-6 w-6 text-gray-600 hover:text-gray-800 cursor-pointer ml-3" />
+        <FaTrash
+          onClick={() => handleDelete()}
+          className="h-6 w-6 text-gray-600 hover:text-gray-800 cursor-pointer ml-3"
+        />
       </div>
     </div>
   );
