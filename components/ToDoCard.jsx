@@ -32,6 +32,15 @@ export default function ToDoCard({ task }) {
   };
   ///END DELETING TASKS
 
+  ///CHECKING TASKS
+  const handleCheck = async () => {
+    const docRef = doc(db, "tasks", task.id);
+    await updateDoc(docRef, {
+      isChecked: !isChecked,
+    });
+    console.log("Document checked with ID: ", docRef.id);
+  };
+
   return (
     <div className="flex relative mt-5 shadow-md rounded-lg p-4 max-w-xl mx-auto bg-white">
       <p className="top-1 mt-1 left-12 ml-1 absolute text-sm font-light text-slate-400">
@@ -42,7 +51,10 @@ export default function ToDoCard({ task }) {
         <input
           type="checkbox"
           className="w-6 h-6 items-center"
-          onChange={() => setIsChecked(!isChecked)}
+          onChange={() => {
+            setIsChecked(!isChecked);
+            handleCheck();
+          }}
         />
       </div>
 
