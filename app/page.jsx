@@ -26,29 +26,13 @@ export default function Home() {
         QuerySnapshot.docs.map((task) => ({
           ...task.data(),
           id: task.id,
-          timestamp: task.data().timestamp?.toDate().getTime(),
+          timestamp: task.data().timestamp?.toDate().toDateString(),
         }))
       );
     });
 
     return unsubscribe;
   }, []);
-
-  // const fetchTasks = async () => {
-  //   const q = query(collection(db, "tasks"));
-  //   const querySnapshot = await getDocs(q);
-  //   console.log(querySnapshot);
-  //   const tempTasks = [];
-  //   querySnapshot.forEach((task) => {
-  //     console.log(task.id, " => ", task.data());
-  //     tempTasks.push({ id: task.id, ...task.data() });
-  //   });
-  //   setTasks(tempTasks);
-  // };
-
-  // useEffect(() => {
-  //   fetchTasks()
-  // }, [tasks]);
 
   return (
     <div>

@@ -13,11 +13,12 @@ export default function ToDoCard({ task }) {
           onChange={() => setIsChecked(!isChecked)}
         />
       </div>
-      <div className="flex-1 my-auto justify-start ml-3">
+      <div className="flex-1 relative my-auto justify-start ml-3">
+      <p className="bottom-7 absolute text-sm font-light text-slate-400"> {task.timestamp}</p>
         <h3
           className={`text-lg font-medium ${isChecked ? "line-through" : ""}`}
         >
-          {task.text} 
+          {task.text}
         </h3>
       </div>
       <div className="flex items-center justify-end ml-3">
