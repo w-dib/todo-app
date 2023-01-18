@@ -23,10 +23,10 @@ export default function Home() {
     const q = query(collection(db, "tasks"), orderBy("timestamp", "desc"));
     const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
       setTasks(
-        QuerySnapshot.tasks.map((task) => ({
+        QuerySnapshot.docs.map((task) => ({
           ...task.data(),
           id: task.id,
-          timestamp: doc.data().timestamp?.toDate().getTime(),
+          timestamp: task.data().timestamp?.toDate().getTime(),
         }))
       );
     });
