@@ -3,7 +3,7 @@ import { FaPaperPlane } from "react-icons/fa";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../app/fbconfig";
 
-export default function ToDoEntry() {
+export default function ToDoEntry({user}) {
   const [taskText, setTaskText] = useState("");
   const [showAlert, setShowAlert] = useState(false);
 
@@ -13,9 +13,12 @@ export default function ToDoEntry() {
         text: taskText,
         timestamp: new Date(),
         isChecked: false,
+        userId:user.uid
       });
       console.log("Document written with ID: ", docRef.id);
       setTaskText("");
+      setShowAlert(true)
+
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -48,13 +51,13 @@ export default function ToDoEntry() {
         />
       </div>
       {showAlert && (
-        <div className="bg-green-500 text-white p-3 rounded-lg absolute top-16 right-3">
+        <div className="bg-green-500 text-white p-3 rounded-lg absolute top-16 right-3 z-40">
           Task successfully submitted!
           <button
             className="ml-2 text-white text-sm font-medium"
             onClick={handleDismiss}
           >
-            Dismiss
+            <span className="underline cursor-pointer">Dismiss</span>
           </button>
         </div>
       )}

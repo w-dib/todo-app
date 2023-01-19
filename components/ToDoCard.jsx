@@ -1,12 +1,16 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaPen, FaTrash } from "react-icons/fa";
-import { collection, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import {  doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../app/fbconfig";
 export default function ToDoCard({ task }) {
   const [isChecked, setIsChecked] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState("");
+
+  useEffect(() => {
+    setIsChecked(task.isChecked);
+  }, [task.isChecked]);
 
   ///EDITING TASKS
   const handleEdit = async () => {
@@ -40,8 +44,10 @@ export default function ToDoCard({ task }) {
     });
     console.log("Document checked with ID: ", docRef.id);
   };
+  ///END CHECKING TASKS
 
   return (
+
     <div className="flex relative mt-5 shadow-md rounded-lg p-4 max-w-xl mx-auto bg-white">
       <p className="top-1 mt-1 left-12 ml-1 absolute text-sm font-light text-slate-400">
         {task.timestamp}

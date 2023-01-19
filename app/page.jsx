@@ -39,8 +39,8 @@ export default function Home() {
       <Navbar setLoggedIn={setLoggedIn} setUser={setUser} />
       {loggedIn ? (
         <>
-          <ToDoEntry />
-          {tasks.map((task) => (
+          <ToDoEntry user={user}/>
+          {tasks.filter((task) => task.userId === user.uid).map((task) => (
             <ToDoCard key={task.id} task={task} />
           ))}
         </>
